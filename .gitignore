@@ -1,7 +1,7 @@
 /server/node_modules
 /server/build
-/webscrapping/Include
-/webscrapping/Lib
-/webscrapping/Scripts
-/webscrapping/pyvenv.cfg
+/webscraping/Include
+/webscraping/Lib
+/webscraping/Scripts
+/webscraping/pyvenv.cfg
 .vscode
