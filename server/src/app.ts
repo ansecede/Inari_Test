@@ -5,6 +5,7 @@ import {
   getLastEditorial,
   createFirstTwentyEditorials,
   createEditorial,
+  errorRoute,
 } from "./services/editorialServices";
 import { toNewEditorial, toNewEditorialsArray } from "./parseEditorial";
 
@@ -26,11 +27,9 @@ app.get("/editorials", async (_req, res) => {
   }
 });
 
-app.get("/editorials/:id", async (req, res) => {
+app.get("/editorials/lastentry", async (_req, res) => {
   try {
-    const id = Number(req.params.id);
-
-    const response = await getEditorialById(id);
+    const response = await getLastEditorial();
     res.status(200).send(response);
   } catch (e: any) {
     console.log(e.message);
@@ -38,9 +37,11 @@ app.get("/editorials/:id", async (req, res) => {
   }
 });
 
-app.get("/editorials/lastentry", async (_req, res) => {
+app.get("/editorials/:id", async (req, res) => {
   try {
-    const response = await getLastEditorial();
+    const id = Number(req.params.id);
+
+    const response = await getEditorialById(id);
     res.status(200).send(response);
   } catch (e: any) {
     console.log(e.message);
@@ -72,8 +73,6 @@ app.post("/editorials", async (req, res) => {
   }
 });
 
-app.get("*", (_req, res) => {
-  res.status(404).send("<h1 style='text-align: center;'>404 | Not found</h1>");
-});
+app.get("*", errorRoute);
 
 export default app;
