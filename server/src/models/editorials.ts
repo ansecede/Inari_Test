@@ -1,6 +1,6 @@
 import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity({ name: "editoriales" })
+@Entity({ name: "editoriales", synchronize: true })
 export class Editorial extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -21,7 +21,7 @@ export class Editorial extends BaseEntity {
   paragraph_qty: number;
 
   @Column({
-    length: 8000,
+    type: "longtext",
   })
   body: string;
 }

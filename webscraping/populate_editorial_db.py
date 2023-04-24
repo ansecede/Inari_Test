@@ -1,5 +1,5 @@
 from editorial_requests import insert_last_20_editorials
-from editorials_utils import get_available_editorials
+from editorials_utils import scrape_available_editorials
 
 import requests
 from bs4 import BeautifulSoup
@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 
 def main():
     editorials_info = {"info": []}
-    available_editorials = get_available_editorials()
+    available_editorials = scrape_available_editorials()
 
     for editorial in available_editorials:
         info = {"title": "", "caption": "", "publish_date_text": "", "publish_date_utc": "",
@@ -37,8 +37,7 @@ def main():
 
         editorials_info["info"].append(info)
 
-    print(editorials_info)
-    # insert_last_20_editorials(editorials_info)
+    insert_last_20_editorials(editorials_info)
 
 
 if __name__ == "__main__":

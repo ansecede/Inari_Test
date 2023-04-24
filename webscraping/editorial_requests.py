@@ -2,13 +2,13 @@ from config import API_URL
 
 import requests
 
-last_20_url = f"{API_URL}/primeros20"
+first_20_url = f"{API_URL}/primeros20"
 last_editorial_url = f"{API_URL}/lastentry"
 insert_one_url = f"{API_URL}"
 
 
 def insert_last_20_editorials(entries):
-    response = requests.post(API_URL, json=entries)
+    response = requests.post(first_20_url, json=entries)
 
     print(response.json())
     return response.json()

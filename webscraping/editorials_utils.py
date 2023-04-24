@@ -4,7 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 
 
-def get_available_editorials():
+def scrape_available_editorials():
     editorials_response = requests.get(EDITORIALS_URL)
 
     editorials_soup = BeautifulSoup(editorials_response.text, "html.parser")

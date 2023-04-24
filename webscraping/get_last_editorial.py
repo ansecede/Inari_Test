@@ -1,4 +1,4 @@
-from editorials_utils import get_available_editorials
+from editorials_utils import scrape_available_editorials
 
 import requests
 from bs4 import BeautifulSoup
@@ -8,7 +8,7 @@ def get_last_editorial():
     info = {"title": "", "caption": "", "publish_date_text": "", "publish_date_utc": "",
             "paragraph_qty": "", "body": []}
 
-    available_editorials = get_available_editorials()
+    available_editorials = scrape_available_editorials()
     last_editorial = available_editorials[0]
 
     editorial_a_tag = last_editorial.find("a")

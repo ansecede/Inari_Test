@@ -11,6 +11,7 @@ export const MyDataSource = new DataSource({
   synchronize: true,
   logging: true,
   entities: [Editorial],
+  charset: "utf8mb4",
   // subscribers: [],
   // migrations: [],
 });

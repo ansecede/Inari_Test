@@ -51,7 +51,7 @@ app.get("/editorials/:id", async (req, res) => {
 
 app.post("/editorials/primeros20", async (req, res) => {
   try {
-    const editorials = toNewEditorialsArray(req.body);
+    const editorials = toNewEditorialsArray(req.body?.info);
 
     const response = await createFirstTwentyEditorials(editorials);
     res.status(200).send(response);
