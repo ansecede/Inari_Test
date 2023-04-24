@@ -1,21 +1,17 @@
+from editorials_utils import get_available_editorials
+
 import requests
 from bs4 import BeautifulSoup
 
-editorials_url = "https://www.eluniverso.com/opinion/editoriales/"
-editorials_info = {"info": []}
-info = {"title": "", "caption": "", "publish_date_text": "", "publish_date_utc": "",
-        "paragraph_qty": "", "body": []}
 
-editorials_response = requests.get(editorials_url)
+def get_last_editorial():
+    info = {"title": "", "caption": "", "publish_date_text": "", "publish_date_utc": "",
+            "paragraph_qty": "", "body": []}
 
-editorials_soup = BeautifulSoup(editorials_response.text, "html.parser")
+    available_editorials = get_available_editorials()
+    last_editorial = available_editorials[0]
 
-editorials = editorials_soup.find("ul", class_="feed")
-available_editorials = editorials.find_all("li")
-
-for editorial in available_editorials:
-
-    editorial_a_tag = editorial.find("a")
+    editorial_a_tag = last_editorial.find("a")
     path = editorial_a_tag["href"]
 
     editorial_route = f"https://www.eluniverso.com{path}"
@@ -36,6 +32,3 @@ for editorial in available_editorials:
 
     info["body"] = [paragraph.text.strip() for paragraph in paragraphs]
     info["paragraph_qty"] = len(paragraphs)
-
-    editorials_info["info"].append(info)
-
