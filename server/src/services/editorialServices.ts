@@ -37,5 +37,15 @@ export async function createEditorial(editorial: IEditorial) {
   newEditorial.paragraph_qty = paragraph_qty;
   newEditorial.body = body;
 
-  await newEditorial.save()
+  await newEditorial.save();
+
+  return { msg: "Editorial successfully added" };
+}
+
+export async function createFirstTwentyEditorials(editoriales: IEditorial[]) {
+  editoriales.forEach(async (editorial) => {
+    await createEditorial(editorial);
+  });
+
+  return { msg: "Editorials successfully added" };
 }

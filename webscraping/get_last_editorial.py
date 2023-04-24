@@ -32,3 +32,5 @@ def get_last_editorial():
 
     info["body"] = [paragraph.text.strip() for paragraph in paragraphs]
     info["paragraph_qty"] = len(paragraphs)
+
+    print(info)

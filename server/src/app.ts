@@ -3,7 +3,10 @@ import {
   getEditorials,
   getEditorialById,
   getLastEditorial,
+  createFirstTwentyEditorials,
+  createEditorial,
 } from "./services/editorialServices";
+import { toNewEditorial, toNewEditorialsArray } from "./parseEditorial";
 
 const app = express();
 
@@ -35,7 +38,7 @@ app.get("/editorials/:id", async (req, res) => {
   }
 });
 
-app.get("/editorials/last", async (_req, res) => {
+app.get("/editorials/lastentry", async (_req, res) => {
   try {
     const response = await getLastEditorial();
     res.status(200).send(response);
@@ -45,12 +48,28 @@ app.get("/editorials/last", async (_req, res) => {
   }
 });
 
-app.post("/editorials/primeros20", (_req, res) => {
-  res.send("<h1 style='{text-align: center;}'>Prueba Inari</h1>");
+app.post("/editorials/primeros20", async (req, res) => {
+  try {
+    const editorials = toNewEditorialsArray(req.body);
+
+    const response = await createFirstTwentyEditorials(editorials);
+    res.status(200).send(response);
+  } catch (e: any) {
+    console.log(e.message);
+    res.status(400).send({ msg: e.message });
+  }
 });
 
-app.post("/editorials", (_req, res) => {
-  res.send("<h1 style='{text-align: center;}'>Prueba Inari</h1>");
+app.post("/editorials", async (req, res) => {
+  try {
+    const editorial = toNewEditorial(req.body);
+
+    const response = await createEditorial(editorial);
+    res.status(200).send(response);
+  } catch (e: any) {
+    console.log(e.message);
+    res.status(400).send({ msg: e.message });
+  }
 });
 
 app.get("*", (_req, res) => {
