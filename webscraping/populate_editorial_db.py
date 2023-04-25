@@ -3,6 +3,7 @@ from editorials_utils import scrape_available_editorials
 
 import requests
 from bs4 import BeautifulSoup
+from datetime import datetime
 
 
 def main():
@@ -37,7 +38,12 @@ def main():
 
         editorials_info["info"].append(info)
 
+    # El detalle del datetime es para que se ordene corectamente
+    editorials_info["info"] = sorted(editorials_info["info"], key=lambda d: datetime.strptime(
+        d["publish_date_utc"], "%a %b %d %Y %H:%M:%S GMT+0000 (Coordinated Universal Time)"), reverse=False)
+
     insert_last_20_editorials(editorials_info)
+    # print(editorials_info)
 
 
 if __name__ == "__main__":

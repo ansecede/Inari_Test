@@ -16,6 +16,7 @@ def insert_last_20_editorials(entries):
 
 def get_last_entry():
     response = requests.get(last_editorial_url)
+    print(response.json())
 
     return response.json()
 

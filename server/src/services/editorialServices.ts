@@ -23,6 +23,27 @@ export async function getLastEditorial() {
 }
 
 export async function createEditorial(editorial: IEditorial) {
+  const newEditorial = createEditorialInstances(editorial);
+
+  await newEditorial.save();
+
+  return { msg: "Editorial successfully added" };
+}
+
+export async function createFirstTwentyEditorials(editoriales: IEditorial[]) {
+  const newEditoriales = editoriales.map((editorial) => {
+    return createEditorialInstances(editorial);
+  });
+
+  Editorial.getRepository().manager.transaction(
+    async (transactionalEntityManager) => {
+      await transactionalEntityManager.save(newEditoriales);
+    }
+  );
+  return { msg: "Editorials successfully added" };
+}
+
+function createEditorialInstances(editorial: IEditorial): Editorial {
   const newEditorial = new Editorial();
   const {
     title,
@@ -40,17 +61,7 @@ export async function createEditorial(editorial: IEditorial) {
   newEditorial.paragraph_qty = paragraph_qty;
   newEditorial.body = body;
 
-  await newEditorial.save();
-
-  return { msg: "Editorial successfully added" };
-}
-
-export async function createFirstTwentyEditorials(editoriales: IEditorial[]) {
-  editoriales.forEach(async (editorial) => {
-    await createEditorial(editorial);
-  });
-
-  return { msg: "Editorials successfully added" };
+  return newEditorial;
 }
 
 export function errorRoute(_req: Request, res: Response) {
